@@ -51,10 +51,11 @@ header{
 }
 
 input{
-  font-size: 25px;
-  border-radius: 10px;
-  margin:20px;
-  width: 70%;
+    padding: 10px;
+    font-size: 15px;
+    border-radius: 10px;
+    margin:20px;
+    width: 70%;
 }
 
 span{
@@ -96,6 +97,7 @@ button{
     background-color: rgb(23, 116, 116);
     border: 1px solid white;
     color:white;
+    border-radius: 5px;
 }
 
 button:hover{
