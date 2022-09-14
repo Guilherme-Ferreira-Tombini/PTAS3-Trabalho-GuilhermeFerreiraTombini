@@ -33,7 +33,8 @@ app.get('/autenticar', async function(req, res){
 })
 
 app.get('/usuarios', async function(req, res){
-  res.render('usuarios');
+  var resultado = await usuario.findAll();
+  res.json(resultado);
 })
 
 app.get('/', async function(req, res){
