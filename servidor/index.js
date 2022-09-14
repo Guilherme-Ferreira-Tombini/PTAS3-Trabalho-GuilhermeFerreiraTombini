@@ -32,17 +32,12 @@ app.get('/autenticar', async function(req, res){
   res.render('autenticar');
 })
 
-app.get('/usuarios', async function(req, res){
-  var resultado = await usuario.findAll();
-  res.json(resultado);
-})
-
 app.get('/', async function(req, res){
   res.render("home")
 })
 
 app.post('/logar', (req, res) => {
-  if(req.body.user === 'Guilherme' && req.body.password === '1234'){
+  if(req.body.usuario === 'Guilherme' && req.body.senha === '1234'){
     const id = 1;
     const token = jwt.sign({ id }, process.env.SECRET, {
       expiresIn: 3600 // expires in 1 hour
@@ -60,8 +55,19 @@ app.post('/deslogar', function(req, res) {
   res.json({deslogado: true})
 })
 
+// Cadastro de usuarios
 app.get('/inscrever', async function(req, res){
   res.render("inscrever")
+});
+
+app.post('/cadastro', async function(req, res){
+ const usuarios = usuario.create(req.body);
+});
+
+// listar usuarios
+app.get('/usuarios', async function(req, res){
+  var resultado = await usuario.findAll();
+  res.json(resultado);
 })
 
 app.listen(3000, function() {
