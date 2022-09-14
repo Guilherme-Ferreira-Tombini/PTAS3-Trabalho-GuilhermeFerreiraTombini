@@ -62,6 +62,7 @@ app.get('/inscrever', async function(req, res){
 
 app.post('/cadastro', async function(req, res){
  const usuarios = usuario.create(req.body);
+ res.json(usuarios);
 });
 
 // listar usuarios
