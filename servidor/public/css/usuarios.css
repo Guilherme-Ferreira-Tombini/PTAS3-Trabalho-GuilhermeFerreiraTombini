@@ -50,13 +50,6 @@ header{
     align-items: center;
 }
 
-input{
-  font-size: 25px;
-  border-radius: 10px;
-  margin:20px;
-  width: 70%;
-}
-
 span{
     font-size: 20px;
 }
@@ -66,6 +59,9 @@ span{
     padding: 10px;
     margin: 120px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     background-color: rgb(4, 4, 126);
     color:white;
     border-radius: 10px;
@@ -88,30 +84,33 @@ main{
     margin-top: 6px;
 }
 
-button{
-    margin:10px;
-    padding: 10px;
-    font-size: 15px;
-    background-color: rgb(23, 116, 116);
-    border: 1px solid white;
-    color:white;
-}
-
-button:hover{
-    transform: scale(1.1);
-    transition: all 0.5s;
-    color:white;
-    background-color: blue;
-    border: 1px solid white;
-}
-
-form{
+.tabela{
     display: flex;
-    align-items: center;
     flex-direction: column;
-    flex-wrap: wrap;
+    padding: 15px;
 }
 
-form button{
-    width: 50%;
+table, th, td{
+    border: 1px solid rgb(0, 0, 0);
+    border-collapse: collapse;
+}
+
+th, td{
+    padding: 10px 20px;
+}
+
+th{
+    background-color: blue;
+}
+
+td{
+    color:black
+}
+
+table, tr:nth-child(odd){
+    background-color: rgb(214, 214, 214);
+}
+
+table, tr:nth-child(even){
+    background-color: rgb(255, 255, 255);
 }

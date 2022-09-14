@@ -64,14 +64,13 @@ app.get('/inscrever', async function(req, res){
 
 app.post('/cadastro', async function(req, res){
  const usuarios = usuario.create(req.body);
- res.json(usuarios);
+ res.render("home");
 });
 
 // listar usuarios
 app.get('/usuarios', async function(req, res){
   var resultado = await usuario.findAll();
-  res.json(resultado);
- // res.render("listar", {resultado})
+  res.render("usuarios", {resultado});
 })
 
 app.listen(3000, function() {
