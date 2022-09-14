@@ -36,8 +36,10 @@ app.get('/', async function(req, res){
   res.render("home")
 })
 
-app.post('/logar', (req, res) => {
-  if(req.body.usuario === 'Guilherme' && req.body.senha === '1234'){
+app.post('/logar', async (req, res) => {
+  const usuario_cod = await usuario.findOne({where:{usuario: req.body.usuario}});
+  
+  if(req.body.usuario === usuario_cod.usuario && req.body.senha === usuario_cod.senha){
     const id = 1;
     const token = jwt.sign({ id }, process.env.SECRET, {
       expiresIn: 3600 // expires in 1 hour
@@ -69,6 +71,7 @@ app.post('/cadastro', async function(req, res){
 app.get('/usuarios', async function(req, res){
   var resultado = await usuario.findAll();
   res.json(resultado);
+ // res.render("listar", {resultado})
 })
 
 app.listen(3000, function() {
