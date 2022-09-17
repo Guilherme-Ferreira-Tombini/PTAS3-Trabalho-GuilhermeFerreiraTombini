@@ -38,8 +38,9 @@ app.get('/', async function(req, res){
 
 app.post('/logar', async (req, res) => {
   const usuario_cod = await usuario.findOne({where:{usuario: req.body.usuario}});
-  
-  if(req.body.usuario === usuario_cod.usuario && req.body.senha === usuario_cod.senha){
+  if(usuario_cod === null){
+    res.status(500).json({message: 'Login inválido!'});
+  } else if(req.body.usuario === usuario_cod.usuario && req.body.senha === usuario_cod.senha){
     const id = 1;
     const token = jwt.sign({ id }, process.env.SECRET, {
       expiresIn: 3600 // expires in 1 hour
@@ -47,9 +48,10 @@ app.post('/logar', async (req, res) => {
 
     res.cookie('token', token, { httpOnly: true });
     return res.json({ auth: true, token: token });
+  } else{
+    res.status(500).json({message: 'Login inválido!'});
   }
 
-  res.status(500).json({message: 'Login inválido!'});
 })
 
 app.post('/deslogar', function(req, res) {
