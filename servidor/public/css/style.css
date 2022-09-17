@@ -96,6 +96,7 @@ button{
   border: 1px solid white;
   color:white;
   border-radius: 10px;
+  transition: 1s;
 }
 
 button:hover{
