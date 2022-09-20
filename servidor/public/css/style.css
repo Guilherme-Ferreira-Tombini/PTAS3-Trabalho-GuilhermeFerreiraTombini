@@ -13,6 +13,7 @@ a {
 
 main{
   background-color: rgb(89, 89, 109);
+  height: 82vh;
   display:flex;
   flex-direction: column;
   align-items: center;
