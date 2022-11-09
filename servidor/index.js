@@ -3,13 +3,7 @@ require("dotenv-safe").config();
 const jwt = require('jsonwebtoken');
 var { expressjwt: expressJWT } = require("express-jwt");
 const cors = require('cors');
-
-const crypto = require('crypto');
-const CHAVE = process.env.CHAVE;
-const IV = process.env.IV;
-const ALGORITMO = process.env.ALGORITMO;
-const METODO_CRIPTOGRAFIA = process.env.METODO_CRIPTOGRAFIA;
-const METODO_DESCRIPTOGRAFIA = process.env.METODO_DESCRIPTOGRAFIA;
+const criptografa= require('./crypto_');
 
 var cookieParser = require('cookie-parser')
 
@@ -35,19 +29,6 @@ app.use(
   }).unless({ path: ["/autenticar", "/logar", "/deslogar"] })
 );
 
-const encrypt = ((text) =>  {
-   let cipher = crypto.createCipheriv(ALGORITMO, CHAVE, IV);
-   let encrypted = cipher.update(text, 'utf8', METODO_CRIPTOGRAFIA);
-   encrypted += cipher.final(METODO_CRIPTOGRAFIA);
-   return encrypted;
-});
-
-const decrypt = ((text) => {
-   let decipher = crypto.createDecipheriv(ALGORITMO, CHAVE, IV);
-   let decrypted = decipher.update(text, METODO_DESCRIPTOGRAFIA, 'utf8');
-   return (decrypted + decipher.final('utf8'));
-});
-
 app.get('/autenticar', async function(req, res){
   res.render('autenticar');
 })
@@ -58,7 +39,7 @@ app.get('/', async function(req, res){
 
 app.post('/logar', async (req, res) => {
   const usuario_cod = await usuario.findOne({where:{usuario: req.body.usuario}});
-  const usuario_senha = decrypt(usuario_cod.senha);
+  const usuario_senha = criptografa.decrypt(usuario_cod.senha);
   if(usuario_cod === null){
     res.status(500).json({message: 'Login inválido!'});
   } else if(req.body.usuario === usuario_cod.usuario && req.body.senha === usuario_senha){
@@ -86,7 +67,7 @@ app.get('/inscrever', async function(req, res){
 });
 
 app.post('/cadastro', async function(req, res){
- const dados = encrypt(req.body.senha);
+ const dados = criptografa.encrypt(req.body.senha);
  const usuarios = usuario.create(
    {
      nome: req.body.nome,
